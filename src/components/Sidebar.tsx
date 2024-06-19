@@ -4,7 +4,7 @@ import { MdOutlineFilterList } from 'react-icons/md';
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="w-80 p-8 hidden md:block bg-[#18181C] rounded-3xl text-gray-200">
+    <div className="w-full hidden md:block md:w-80 p-4 md:p-8 bg-[#18181C] rounded-3xl text-gray-200">
       <div className="mb-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl text-[#8E91D4] font-semibold">Filters</h2>
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
           <FaFolder className="mr-2" /> Default
         </button>
       </div>
-      <div className="my-44 mx-28 cursor-pointer">
+      <div className="mt-8 md:mt-28 mx-auto md:mx-28 cursor-pointer">
         <FaGithub className="text-2xl" />
       </div>
     </div>
@@ -40,4 +40,5 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
+
 
