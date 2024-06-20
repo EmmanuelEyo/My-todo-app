@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent'
 import { HiMenuAlt4 } from "react-icons/hi";
-// import AddTaskModal from './components/AddTaskModal';
+import './App.css'
 
 const App: React.FC = () => {
   return (
@@ -19,7 +19,6 @@ const App: React.FC = () => {
           <MainContent />
         </div>
       </div>
-      {/* <AddTaskModal /> */}
     </div>
   );
 }
