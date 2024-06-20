@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { FaSmile, FaPaperclip, FaAt } from 'react-icons/fa';
 
+
+interface Task {
+  id: number;
+  name: string;
+  dueDate: string;
+  description: string;
+  starred: boolean;
+  completed: boolean;
+}
+
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
