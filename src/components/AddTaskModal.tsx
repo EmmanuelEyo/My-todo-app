@@ -9,35 +9,36 @@ interface Task {
   description: string;
   starred: boolean;
   completed: boolean;
+  projectId: number | null
 }
 
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
   addTask: (task: Task) => void;
+  projects?: { id: number, name: string }[]
 }
 
-const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, addTask }) => {
-  const [taskName, setTaskName] = useState('');
+const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, addTask, projects = [] }) => {
+  const [name, setName] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
+  const [description, setDescription] = useState('');
+  const [projectId, setProjectId] = useState<number | null>(projects.length > 0 ? projects[0].id : null)
 
   const handleSubmit = () => {
-    if (taskName && dueDate) {
-      const newTask = {
-        id: Date.now(),
-        name: taskName,
-        dueDate,
-        description: taskDescription,
-        starred: false,
-        completed: false,
-      };
-      addTask(newTask);
-      onClose();
-      setTaskName('');
-      setDueDate('');
-      setTaskDescription('');
-    }
+    addTask({
+      id: Date.now(),
+      name,
+      dueDate,
+      description,
+      starred: false,
+      completed: false,
+      projectId,
+    })
+    setName('')
+    setDueDate('')
+    setDescription('')
+    onClose()
   };
 
   if (!isOpen) return null;
@@ -52,8 +53,8 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, addTask })
             id="taskName"
             type="text"
             className="w-full p-2 outline-none rounded bg-[#232526] border border-gray-600"
-            value={taskName}
-            onChange={(e) => setTaskName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -72,8 +73,8 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, addTask })
             <textarea
               id="taskDescription"
               className="w-full p-2 h-36 rounded bg-[#232526] outline-none border border-gray-600 pr-10"
-              value={taskDescription}
-              onChange={(e) => setTaskDescription(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
             <div className="absolute top-0 right-0 flex items-center p-2 space-x-2">
               <button className="text-[#47495A] hover:text-white">
@@ -86,6 +87,13 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, addTask })
                 <FaAt />
               </button>
             </div>
+            <select value={projectId !== null ? projectId : undefined} onChange={e => setProjectId(Number(e.target.value))} className='w-full bg-gray-800 outline-none p-2 mb-2 border border-gray-700 rounded'>
+              {projects.map(project => (
+                <option key={project.id} value={project.id}>
+                  {project.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="flex justify-end">
